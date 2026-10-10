@@ -18,7 +18,10 @@ namespace SortAlgorithms.Benchmarks
         /// variables, then runs the chosen benchmark with BenchmarkDotNet (rank column, memory diagnoser,
         /// results ordered from fastest to slowest). Run it in Release.
         /// </summary>
-        /// <param name="args">Not used.</param>
+        /// <param name="args">
+        /// If not empty, the prompts are skipped and the arguments are passed to BenchmarkDotNet's
+        /// <see cref="BenchmarkSwitcher"/> (for example <c>--filter</c>, <c>--job short</c>, <c>--exporters json</c>).
+        /// </param>
         static void Main(string[] args)
         {
             // --- available benchmarks ---
@@ -38,6 +41,13 @@ namespace SortAlgorithms.Benchmarks
                 typeof(QuickSortBenchmark),
                 typeof(ShellSortBenchmark),
             };
+
+            // --- non-interactive mode: forward the arguments to BenchmarkDotNet (--filter, --job, --exporters...) ---
+            if (args.Length > 0)
+            {
+                BenchmarkSwitcher.FromTypes(benchmarkTypes).Run(args, CreateConfig());
+                return;
+            }
 
             Console.WriteLine("=== Choose a benchmark to run ===");
             for (int i = 0; i < benchmarkTypes.Length; i++)
@@ -84,15 +94,21 @@ namespace SortAlgorithms.Benchmarks
                 Environment.SetEnvironmentVariable("BENCH_CASE", "0");
             }
 
-            // --- Apply the BenchmarkDotNet config ---
-            var config = ManualConfig.Create(DefaultConfig.Instance)
+            Console.WriteLine($"\n Starting benchmark {selectedBenchmark.Name} ...\n");
+
+            BenchmarkRunner.Run(selectedBenchmark, CreateConfig());
+        }
+
+        /// <summary>
+        /// BenchmarkDotNet config shared by both modes: rank column, memory diagnoser,
+        /// results ordered from fastest to slowest.
+        /// </summary>
+        private static IConfig CreateConfig()
+        {
+            return ManualConfig.Create(DefaultConfig.Instance)
                 .AddColumn(RankColumn.Arabic)
                 .AddDiagnoser(MemoryDiagnoser.Default)
                 .WithOrderer(new DefaultOrderer(SummaryOrderPolicy.FastestToSlowest));
-
-            Console.WriteLine($"\n Starting benchmark{selectedBenchmark.Name} ...\n");
-
-            BenchmarkRunner.Run(selectedBenchmark, config);
         }
     }
 }
