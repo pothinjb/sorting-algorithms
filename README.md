@@ -96,7 +96,7 @@ dotnet run -c Release --project SortAlgorithms.Benchmarks
 
 The program is interactive. It asks for:
 
-1. the benchmark class to run (one per algorithm family);
+1. the benchmark class to run (one per algorithm family), or the last entry, *Compare algorithms*, to build your own comparison (see below);
 2. an array size (leave empty for the defaults 10, 100, 1 000, 10 000, 100 000);
 3. the input case: `0` AVERAGE (random data, fixed seed), `1` BEST (ascending), `2` WORST (descending), `3` all three.
 
@@ -110,6 +110,19 @@ printf '12\n1000\n0\n' | dotnet run -c Release --project SortAlgorithms.Benchmar
 Every method of a benchmark class sorts a copy of the same input, so the results are directly comparable; one method (usually `MergeSort`) is the baseline of the `Ratio` column. Results (including memory allocations and a rank column) are written to `BenchmarkDotNet.Artifacts/`.
 
 > Each benchmark runs several sizes and can take a while, especially the quadratic sorts on large arrays. Start with a single size.
+
+### Comparing algorithms of your choice
+
+The last menu entry (`14. Compare algorithms (custom selection)`) lists every sorting algorithm of all the benchmark classes (each name once; the threshold-tuning `HybridMergeSortBenchmark` is left out) and lets you pick one or more of them, from any family: type numbers and ranges such as `1,5,12` or `3-6,9`. The size prompt then defaults to **1000** (the families have very different default sizes), and the case prompt is unchanged.
+
+All the selected algorithms are reported in a **single table**, sorted from fastest to slowest and ranked together for each size and case. Each algorithm still runs in its own class, on the same input. The `Ratio` columns are hidden, because the baselines of the different classes mean nothing in a mixed comparison.
+
+```bash
+# HeapSortUsingFloydMaxHeapify, QuicksortHoare and Shell, size 1000, all three cases
+printf '14\n21,36,42\n1000\n3\n' | dotnet run -c Release --project SortAlgorithms.Benchmarks
+```
+
+The algorithm numbers come from the menu and shift when benchmark methods are added: check the list before scripting a selection.
 
 Any command-line argument skips the prompts and is passed to BenchmarkDotNet, so the standard options are available (`--filter`, `--job short`, `--exporters json`…). The size and case still come from `BENCH_SIZE` / `BENCH_CASE`:
 
