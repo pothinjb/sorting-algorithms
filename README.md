@@ -27,7 +27,8 @@ All algorithms sort `int[]`. Most sort **in place**; a few return a new array (n
 | Divide & conquer | `MergeSort` | `Sort(A)`, `ParallelSort(A)` | CLRS merge sort with sentinels |
 | Divide & conquer | `MergeInsertionSort`, `MergeQuartetSort`, `OptimizedMergeSort`, `SkipMergeSort` | `Sort(A, …)`, `ParallelSort(A, …)` | Hybrid merge sorts (insertion/quartet sort below a threshold, skipped merges on already ordered runs, parallel recursion) |
 | Divide & conquer | `QuickSort` | `new QuickSort().Sort(A, QuickSortMethod.X)` | Hoare, Lomuto and a "naive" partition scheme; partitions are also exposed as static methods |
-| Heap | `HeapSort` | `Sort(A)`, `SortUsingNaiveMaxHeapify(A)` | `MaxHeapify` that shifts a "hole" down vs. the naive swap-based version |
+| Heap | `HeapSort` | `Sort(A)`, `SortUsingNaiveMaxHeapify(A)`, `SortRange(A, p, r)` | `MaxHeapify` that shifts a "hole" down vs. the naive swap-based version |
+| Hybrid | `PdqSort` | `Sort(A)`, `Sort(A, bad)` | Pattern-defeating quicksort: median-of-three or ninther pivot, linear time on sorted input and on few distinct values, heap sort fallback after `bad` (default ⌊log₂ n⌋) unbalanced partitions |
 | Non-comparison | `CountingSort` | `Sort(A, k)` | Returns a new array; values must be in `[0, k)` |
 | Non-comparison | `BitwiseSort`, `OptimizedBitwiseSort` | `Sort(A)` | Binary LSD radix sort; values must be non-negative |
 
@@ -111,13 +112,13 @@ Every method of a benchmark class sorts a copy of the same input, so the results
 
 ### Comparing algorithms of your choice
 
-The last menu entry (`14. Compare algorithms (custom selection)`) lists every sorting algorithm of all the benchmark classes (each name once; the threshold-tuning `HybridMergeSortBenchmark` is left out) and lets you pick one or more of them, from any family: type numbers and ranges such as `1,5,12` or `3-6,9`. The size prompt then defaults to **1000** (the families have very different default sizes), and the case prompt is unchanged.
+The last menu entry (`15. Compare algorithms (custom selection)`) lists every sorting algorithm of all the benchmark classes (each name once; the threshold-tuning `HybridMergeSortBenchmark` is left out) and lets you pick one or more of them, from any family: type numbers and ranges such as `1,5,12` or `3-6,9`. The size prompt then defaults to **1000** (the families have very different default sizes), and the case prompt is unchanged.
 
 All the selected algorithms are reported in a **single table**, sorted from fastest to slowest and ranked together for each size and case. Each algorithm still runs in its own class, on the same input. The `Ratio` columns are hidden, because the baselines of the different classes mean nothing in a mixed comparison.
 
 ```bash
 # HeapSortUsingFloydMaxHeapify, QuicksortHoare and Shell, size 1000, all three cases
-printf '14\n21,36,42\n1000\n3\n' | dotnet run -c Release --project SortAlgorithms.Benchmarks
+printf '15\n24,39,45\n1000\n3\n' | dotnet run -c Release --project SortAlgorithms.Benchmarks
 ```
 
 The algorithm numbers come from the menu and shift when benchmark methods are added: check the list before scripting a selection.
@@ -201,6 +202,7 @@ Issues and pull requests are welcome — new algorithms, new variants, bug fixes
 - D. E. Knuth, *The Art of Computer Programming, Vol. 3: Sorting and Searching*, Addison-Wesley.
 - M. A. Bender, M. Farach-Colton, M. A. Mosteiro, "Insertion Sort is O(n log n)", *Theory of Computing Systems*, 2006 — library sort.
 - [Shellsort gap sequences](https://en.wikipedia.org/wiki/Shellsort#Gap_sequences) — overview of the sequences implemented in `ShellSort`.
+- O. R. L. Peters, ["Pattern-defeating Quicksort"](https://arxiv.org/abs/2106.05123), arXiv:2106.05123, 2021 — `PdqSort`.
 
 ## License
 

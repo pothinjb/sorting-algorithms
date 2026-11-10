@@ -57,6 +57,7 @@ namespace SortAlgorithms.Benchmarks
                 typeof(OptimizedMergeSortBenchmark),
                 typeof(QuickSortBenchmark),
                 typeof(ShellSortBenchmark),
+                typeof(HybridSortBenchmark),
             };
 
             // --- non-interactive mode: forward the arguments to BenchmarkDotNet (--filter, --job, --exporters...) ---

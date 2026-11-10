@@ -69,6 +69,65 @@
         }
 
         /// <summary>
+        /// Sorts the sub-array <c>A[p...r]</c> (inclusive bounds) in ascending order with heap sort. Elements
+        /// outside the range are left untouched. Same algorithm as <see cref="Sort"/>, with every heap index
+        /// shifted by <paramref name="p"/>: node <c>k</c> of the heap is stored in <c>A[p + k]</c>.
+        /// Used as the fallback of <see cref="PdqSort"/>.
+        /// </summary>
+        /// <param name="A">Array containing the range to sort.</param>
+        /// <param name="p">Index of the first element of the range.</param>
+        /// <param name="r">Index of the last element of the range (inclusive).</param>
+        public static void SortRange(int[] A, int p, int r)
+        {
+            // MaxHeapBuilding on the sub-array
+            int n = r - p + 1;
+            int last = n - 1;
+            for (int i = (n - 2) / 2; i >= 0; --i)
+            {
+                MaxHeapify(A, p, i, last);
+            }
+
+            for (int i = last; i > 0; --i)
+            {
+                int tmp = A[p + i];
+                A[p + i] = A[p];
+                A[p] = tmp;
+                MaxHeapify(A, p, 0, i - 1);
+            }
+        }
+
+        /// <summary>
+        /// Same as <see cref="MaxHeapify(int[], int, int)"/> for the heap stored in <c>A[p...p+last]</c>,
+        /// node <c>k</c> being at index <c>p + k</c>.
+        /// </summary>
+        /// <param name="A">Array holding the heap.</param>
+        /// <param name="p">Index of the root of the heap in <paramref name="A"/>.</param>
+        /// <param name="i">Heap index of the node to sift down (stored in <c>A[p + i]</c>).</param>
+        /// <param name="last">Heap index of the last element of the heap (inclusive).</param>
+        private static void MaxHeapify(int[] A, int p, int i, int last)
+        {
+            int val = A[p + i];
+            while (true)
+            {
+                int left = (i << 1) + 1;
+                if (left > last) break;
+
+                int right = left + 1;
+
+                int largest = left;
+
+                if (right <= last && A[p + right] > A[p + left])
+                    largest = right;
+
+                if (A[p + largest] <= val) break;
+
+                A[p + i] = A[p + largest];
+                i = largest;
+            }
+            A[p + i] = val;
+        }
+
+        /// <summary>
         /// Sorts <paramref name="A"/> in ascending order, using the textbook (swap-based) max-heapify.
         /// </summary>
         /// <param name="A">Array to sort in place.</param>
