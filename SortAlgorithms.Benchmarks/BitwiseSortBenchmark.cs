@@ -87,6 +87,30 @@ namespace SortAlgorithms.Benchmarks
             Core.OptimizedBitwiseSort._Sort3(A);
         }
 
+        /// <summary><see cref="Core.OptimizedBitwiseSort._Sort4"/>.</summary>
+        [Benchmark]
+        public void OptimizedBitwiseSort4()
+        {
+            int[] A = (int[])_A.Clone();
+            Core.OptimizedBitwiseSort._Sort4(A);
+        }
+
+        /// <summary><see cref="Core.OptimizedBitwiseSort._Sort5"/>.</summary>
+        [Benchmark]
+        public void OptimizedBitwiseSort5()
+        {
+            int[] A = (int[])_A.Clone();
+            Core.OptimizedBitwiseSort._Sort5(A);
+        }
+
+        /// <summary><see cref="Core.OptimizedBitwiseSort._Sort6"/>.</summary>
+        [Benchmark]
+        public void OptimizedBitwiseSort6()
+        {
+            int[] A = (int[])_A.Clone();
+            Core.OptimizedBitwiseSort._Sort6(A);
+        }
+
         /// <summary>Parallel merge sort (<see cref="Core.MergeSort.ParallelSort"/>).</summary>
         [Benchmark]
         public void ParallelMergeSort()
@@ -102,12 +126,5 @@ namespace SortAlgorithms.Benchmarks
             int[] A = (int[])_A.Clone();
             Array.Sort(A);
         }
-
-        /*[Benchmark]
-        public void OptimizedBitwiseSort1()
-        {
-            int[] A = (int[])_A.Clone();
-            Core.OptimizedBitwiseSort._Sort1(A);
-        }*/
     }
 }
