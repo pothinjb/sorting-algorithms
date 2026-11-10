@@ -67,8 +67,8 @@ namespace SortAlgorithms.Tests
         /// Runs the common test suite for one sort variant.
         /// </summary>
         /// <param name="methodName">Variant name, as listed in <see cref="SortMethods"/>.</param>
-        [DataTestMethod]
-        [DynamicData(nameof(SortMethodData), DynamicDataSourceType.Property)]
+        [TestMethod]
+        [DynamicData(nameof(SortMethodData))]
         public void Run_Generic_Tests(string methodName)
         {
             RunAllCommonTests(methodName);
@@ -79,8 +79,8 @@ namespace SortAlgorithms.Tests
         /// loops (n mod 4) is met, with group sizes of any value at each pass.
         /// </summary>
         /// <param name="methodName">Variant name, as listed in <see cref="SortMethods"/>.</param>
-        [DataTestMethod]
-        [DynamicData(nameof(SortMethodData), DynamicDataSourceType.Property)]
+        [TestMethod]
+        [DynamicData(nameof(SortMethodData))]
         public void Sort_EverySmallSize(string methodName)
         {
             Random rnd = new(1);
@@ -100,8 +100,8 @@ namespace SortAlgorithms.Tests
         /// bit always set, or a single bit that varies. These passes are skipped by the optimized variants.
         /// </summary>
         /// <param name="methodName">Variant name, as listed in <see cref="SortMethods"/>.</param>
-        [DataTestMethod]
-        [DynamicData(nameof(SortMethodData), DynamicDataSourceType.Property)]
+        [TestMethod]
+        [DynamicData(nameof(SortMethodData))]
         public void Sort_BitsSameInEveryElement(string methodName)
         {
             Random rnd = new(2);
@@ -124,8 +124,8 @@ namespace SortAlgorithms.Tests
         /// <see cref="int.MaxValue"/>, so that all 31 value bits are processed.
         /// </summary>
         /// <param name="methodName">Variant name, as listed in <see cref="SortMethods"/>.</param>
-        [DataTestMethod]
-        [DynamicData(nameof(SortMethodData), DynamicDataSourceType.Property)]
+        [TestMethod]
+        [DynamicData(nameof(SortMethodData))]
         public void Sort_FullRangeValues(string methodName)
         {
             Random rnd = new(3);
@@ -148,8 +148,8 @@ namespace SortAlgorithms.Tests
         /// all non-negative values.
         /// </summary>
         /// <param name="methodName">Variant name, as listed in <see cref="SortMethods"/>.</param>
-        [DataTestMethod]
-        [DynamicData(nameof(SortMethodData), DynamicDataSourceType.Property)]
+        [TestMethod]
+        [DynamicData(nameof(SortMethodData))]
         public void Sort_NegativeValues_SortedAsUnsigned(string methodName)
         {
             Random rnd = new(4);
