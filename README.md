@@ -112,13 +112,13 @@ Every method of a benchmark class sorts a copy of the same input, so the results
 
 ### Comparing algorithms of your choice
 
-The last menu entry (`15. Compare algorithms (custom selection)`) lists every sorting algorithm of all the benchmark classes (each name once; the threshold-tuning `HybridMergeSortBenchmark` is left out) and lets you pick one or more of them, from any family: type numbers and ranges such as `1,5,12` or `3-6,9`. The size prompt then defaults to **1000** (the families have very different default sizes), and the case prompt is unchanged.
+The last menu entry (`15. Compare algorithms (custom selection)`) lists every sorting algorithm of all the benchmark classes (each name once, `ArraySort` being listed with the hybrid sorts; the threshold-tuning `HybridMergeSortBenchmark` is left out) and lets you pick one or more of them, from any family: type numbers and ranges such as `1,5,12` or `3-6,9`. The size prompt then defaults to **1000** (the families have very different default sizes), and the case prompt is unchanged.
 
 All the selected algorithms are reported in a **single table**, sorted from fastest to slowest and ranked together for each size and case. Each algorithm still runs in its own class, on the same input. The `Ratio` columns are hidden, because the baselines of the different classes mean nothing in a mixed comparison.
 
 ```bash
 # HeapSortUsingFloydMaxHeapify, QuicksortHoare and Shell, size 1000, all three cases
-printf '15\n24,39,45\n1000\n3\n' | dotnet run -c Release --project SortAlgorithms.Benchmarks
+printf '15\n23,38,44\n1000\n3\n' | dotnet run -c Release --project SortAlgorithms.Benchmarks
 ```
 
 The algorithm numbers come from the menu and shift when benchmark methods are added: check the list before scripting a selection.

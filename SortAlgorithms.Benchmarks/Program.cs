@@ -28,6 +28,16 @@ namespace SortAlgorithms.Benchmarks
         private const int DefaultComparisonSize = 1000;
 
         /// <summary>
+        /// Benchmark class under which the comparison mode lists a method declared by several classes,
+        /// instead of the first class that declares it. <c>ArraySort</c> goes with the hybrid sorts:
+        /// <see cref="Array.Sort(Array)"/> is an introsort.
+        /// </summary>
+        private static readonly Dictionary<string, Type> ComparisonHomeTypes = new()
+        {
+            ["ArraySort"] = typeof(HybridSortBenchmark),
+        };
+
+        /// <summary>
         /// Asks on the console which benchmark to run, the array size and the case, passes the size and
         /// case to the benchmark classes through the <c>BENCH_SIZE</c> and <c>BENCH_CASE</c> environment
         /// variables, then runs the chosen benchmark with BenchmarkDotNet (rank column, memory diagnoser,
@@ -161,8 +171,10 @@ namespace SortAlgorithms.Benchmarks
         /// Collects the <c>[Benchmark]</c> methods of the benchmark classes, in the order of
         /// <paramref name="benchmarkTypes"/> then in declaration order. A method name already seen in a
         /// previous class is skipped (<c>MergeSort</c>, <c>InsertionSort</c>, <c>ArraySort</c>... run the
-        /// same code everywhere). <see cref="HybridMergeSortBenchmark"/> is left out: it is a threshold
-        /// tuning benchmark, and its extra <c>ThresholdInsert</c> parameter would split the comparison table.
+        /// same code everywhere), except for the methods listed in <see cref="ComparisonHomeTypes"/>, which
+        /// are only taken from their home class. <see cref="HybridMergeSortBenchmark"/> is left out: it is a
+        /// threshold tuning benchmark, and its extra <c>ThresholdInsert</c> parameter would split the
+        /// comparison table.
         /// </summary>
         /// <param name="benchmarkTypes">Benchmark classes to scan.</param>
         /// <returns>The algorithms that can be compared, without duplicate names.</returns>
@@ -183,6 +195,9 @@ namespace SortAlgorithms.Benchmarks
 
                 foreach (MethodInfo method in methods)
                 {
+                    if (ComparisonHomeTypes.TryGetValue(method.Name, out Type homeType) && homeType != type)
+                        continue; // listed with its home class
+
                     if (seenNames.Add(method.Name))
                         catalog.Add(new Algorithm(type, method));
                 }
