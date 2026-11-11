@@ -4,7 +4,7 @@ using System;
 namespace SortAlgorithms.Benchmarks
 {
     /// <summary>
-    /// Compares the hybrid sorts (pdqsort) with heap sort, their fallback, and with <see cref="Array.Sort(Array)"/>.
+    /// Compares the hybrid sorts (introsort, pdqsort) with heap sort, their fallback, and with <see cref="Array.Sort(Array)"/>.
     /// Classic merge sort is the baseline.
     /// </summary>
     [Orderer(BenchmarkDotNet.Order.SummaryOrderPolicy.Method)]
@@ -24,6 +24,14 @@ namespace SortAlgorithms.Benchmarks
         {
             int[] A = (int[])_A.Clone();
             Core.HeapSort.Sort(A);
+        }
+
+        /// <summary>Introsort (<see cref="Core.IntroSort.Sort(int[])"/>).</summary>
+        [Benchmark]
+        public void IntroSort()
+        {
+            int[] A = (int[])_A.Clone();
+            Core.IntroSort.Sort(A);
         }
 
         /// <summary>Pattern-defeating quicksort (<see cref="Core.PdqSort.Sort(int[])"/>).</summary>

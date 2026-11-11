@@ -132,35 +132,16 @@ namespace SortAlgorithms.Core
             if (size > NintherThreshold)
             {
                 int s = size / 8;
-                int m1 = MedianOfThree(A, p, p + s, p + 2 * s);
-                int m2 = MedianOfThree(A, m - s, m, m + s);
-                int m3 = MedianOfThree(A, r - 2 * s, r - s, r);
-                pivot = MedianOfThree(A, m1, m2, m3);
+                int m1 = IntroSort.MedianOfThree(A, p, p + s, p + 2 * s);
+                int m2 = IntroSort.MedianOfThree(A, m - s, m, m + s);
+                int m3 = IntroSort.MedianOfThree(A, r - 2 * s, r - s, r);
+                pivot = IntroSort.MedianOfThree(A, m1, m2, m3);
             }
             else
             {
-                pivot = MedianOfThree(A, p, m, r);
+                pivot = IntroSort.MedianOfThree(A, p, m, r);
             }
             Utils.Swap(A, p, pivot);
-        }
-
-        /// <summary>
-        /// Returns the index (among <paramref name="i"/>, <paramref name="j"/> and <paramref name="k"/>) of the
-        /// median of <c>A[i]</c>, <c>A[j]</c> and <c>A[k]</c>.
-        /// </summary>
-        /// <param name="A">Array holding the three values.</param>
-        /// <param name="i">Index of the first value.</param>
-        /// <param name="j">Index of the second value.</param>
-        /// <param name="k">Index of the third value.</param>
-        private static int MedianOfThree(int[] A, int i, int j, int k)
-        {
-            if (A[i] < A[j])
-            {
-                if (A[j] < A[k]) return j;      // A[i] < A[j] < A[k]
-                return (A[i] < A[k]) ? k : i;   // A[j] is the maximum
-            }
-            if (A[i] < A[k]) return i;          // A[j] <= A[i] < A[k]
-            return (A[j] < A[k]) ? k : j;       // A[i] is the maximum
         }
 
         /// <summary>

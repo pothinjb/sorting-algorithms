@@ -7,8 +7,8 @@ using System.Linq;
 namespace SortAlgorithms.Tests
 {
     /// <summary>
-    /// Runs the common sorting test suite against the hybrid sorts (<see cref="PdqSort"/>), plus patterned
-    /// inputs large enough to exercise their pattern detection and their heap sort fallback.
+    /// Runs the common sorting test suite against the hybrid sorts (<see cref="IntroSort"/>, <see cref="PdqSort"/>),
+    /// plus patterned inputs large enough to exercise their pattern detection and their heap sort fallback.
     /// </summary>
     [TestClass]
     public class HybridSortTests : GenericSortTests
@@ -16,6 +16,9 @@ namespace SortAlgorithms.Tests
         /// <inheritdoc/>
         protected override string[] SortMethods => new[]
         {
+            "IntroSort",
+            "IntroSortDepthLimit0",
+            "IntroSortDepthLimit1",
             "PdqSort",
             "PdqSortBadAllowed1",
         };
@@ -23,7 +26,13 @@ namespace SortAlgorithms.Tests
         /// <inheritdoc/>
         protected override int[] ApplySort(string methodName, int[] array)
         {
-            if (methodName == "PdqSort")
+            if (methodName == "IntroSort")
+                IntroSort.Sort(array);
+            else if (methodName == "IntroSortDepthLimit0") // heap sort alone above the insertion sort threshold
+                IntroSort.Sort(array, 0);
+            else if (methodName == "IntroSortDepthLimit1") // one partition, then heap sort on both parts
+                IntroSort.Sort(array, 1);
+            else if (methodName == "PdqSort")
                 PdqSort.Sort(array);
             else if (methodName == "PdqSortBadAllowed1") // heap sort at the first unbalanced partition
                 PdqSort.Sort(array, 1);

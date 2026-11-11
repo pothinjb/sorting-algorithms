@@ -28,6 +28,7 @@ All algorithms sort `int[]`. Most sort **in place**; a few return a new array (n
 | Divide & conquer | `MergeInsertionSort`, `MergeQuartetSort`, `OptimizedMergeSort`, `SkipMergeSort` | `Sort(A, …)`, `ParallelSort(A, …)` | Hybrid merge sorts (insertion/quartet sort below a threshold, skipped merges on already ordered runs, parallel recursion) |
 | Divide & conquer | `QuickSort` | `new QuickSort().Sort(A, QuickSortMethod.X)` | Hoare, Lomuto and a "naive" partition scheme; partitions are also exposed as static methods |
 | Heap | `HeapSort` | `Sort(A)`, `SortUsingNaiveMaxHeapify(A)`, `SortRange(A, p, r)` | `MaxHeapify` that shifts a "hole" down vs. the naive swap-based version |
+| Hybrid | `IntroSort` | `Sort(A)`, `Sort(A, depthLimit)` | Introspective sort: median-of-three quicksort with Hoare partition, insertion sort on sub-arrays of at most 16 elements, heap sort fallback beyond `depthLimit` (default 2⌊log₂ n⌋) partitioning levels |
 | Hybrid | `PdqSort` | `Sort(A)`, `Sort(A, bad)` | Pattern-defeating quicksort: median-of-three or ninther pivot, linear time on sorted input and on few distinct values, heap sort fallback after `bad` (default ⌊log₂ n⌋) unbalanced partitions |
 | Non-comparison | `CountingSort` | `Sort(A, k)` | Returns a new array; values must be in `[0, k)` |
 | Non-comparison | `BitwiseSort`, `OptimizedBitwiseSort` | `Sort(A)` | Binary LSD radix sort; values must be non-negative |
@@ -202,6 +203,7 @@ Issues and pull requests are welcome — new algorithms, new variants, bug fixes
 - D. E. Knuth, *The Art of Computer Programming, Vol. 3: Sorting and Searching*, Addison-Wesley.
 - M. A. Bender, M. Farach-Colton, M. A. Mosteiro, "Insertion Sort is O(n log n)", *Theory of Computing Systems*, 2006 — library sort.
 - [Shellsort gap sequences](https://en.wikipedia.org/wiki/Shellsort#Gap_sequences) — overview of the sequences implemented in `ShellSort`.
+- D. R. Musser, "Introspective Sorting and Selection Algorithms", *Software: Practice and Experience* 27(8), 1997 — `IntroSort`.
 - O. R. L. Peters, ["Pattern-defeating Quicksort"](https://arxiv.org/abs/2106.05123), arXiv:2106.05123, 2021 — `PdqSort`.
 
 ## License

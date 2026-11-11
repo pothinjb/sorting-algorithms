@@ -72,7 +72,7 @@
         /// Sorts the sub-array <c>A[p...r]</c> (inclusive bounds) in ascending order with heap sort. Elements
         /// outside the range are left untouched. Same algorithm as <see cref="Sort"/>, with every heap index
         /// shifted by <paramref name="p"/>: node <c>k</c> of the heap is stored in <c>A[p + k]</c>.
-        /// Used as the fallback of <see cref="PdqSort"/>.
+        /// Used as the fallback of <see cref="IntroSort"/> and <see cref="PdqSort"/>.
         /// </summary>
         /// <param name="A">Array containing the range to sort.</param>
         /// <param name="p">Index of the first element of the range.</param>
