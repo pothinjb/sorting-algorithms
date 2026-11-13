@@ -7,6 +7,8 @@
 ![Tests: MSTest](https://img.shields.io/badge/tests-MSTest-blue.svg)
 ![Benchmarks: BenchmarkDotNet](https://img.shields.io/badge/benchmarks-BenchmarkDotNet-purple.svg)
 
+> 📖 **Companion ebook (in French):** the algorithms implemented here are presented and analyzed in the companion ebook, [available on Amazon](https://www.amazon.fr/dp/B0HRHGB7D4).
+
 A collection of classic and experimental **sorting algorithms in C#**, written to be read side by side with their textbook pseudo-code, together with a shared **unit test suite** and **BenchmarkDotNet** benchmarks to compare them.
 
 This code is the companion of a (French) LaTeX report on algorithms. The implementations deliberately stay close to the CLRS-style pseudo-code (sentinels, inclusive `p..r` / `left..right` bounds, 0-based indices): **readability and faithfulness to the algorithm come first**, raw speed second. Several algorithms also come in "optimized" or parallel variants so you can measure what each trick actually buys you.
